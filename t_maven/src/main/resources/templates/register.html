@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en" style="height: 100%;" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/foundation.css" th:href="@{/css/foundation.css}">
+    <link rel="stylesheet" href="css/app.css" th:href="@{/css/app.css}">
+  </head>
+
+  <body style="height:100%;">
+    <div class = "grid-x grid-padding-x" style="height:100%;">
+       <div class = "medium-4"></div>
+       <div class = "medium-4 grid-y grid-padding-y" style="height:100%;">
+         <div class = "medium-1"></div>
+         <div class = "medium-4">
+           <img class = "login-logo" src="pics/logo.png" th:src="@{/pics/logo.png}" alt="logo">
+         </div>
+         <p class="text-center" style="color:red" th:text="${info}" th:if="${not #strings.isEmpty(info)}"></p>
+         <div class = "medium-6" style="width:100%;">
+           <form th:action="@{/user/register}" method="post">
+             <input type="email" name="email" placeholder="Your E-mail" required>
+             <input id = "pw1" type="password" name="password" placeholder="Your password" required>
+             <input id = "pw2" type="password" placeholder="Check password" required onchange="pwCheck()">
+             <button class="form-submit-button" type="submit">Sign Up</button>
+             <p class="or-divider"><span>or</span></p>
+             <p class="text-center"><strong>Already have an account? <a th:href="@{/login}">Login</a></strong></p>
+           </form>
+         </div>
+         <div class = "medium-1"></div>
+       </div>
+       <div class = "medium-4"></div>
+    </div>
+
+    <script src="js/app.js" th:src="@{/js/app.js}"></script>
+  </body>
+</html>

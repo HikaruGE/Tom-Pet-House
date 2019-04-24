@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foundation for Sites</title>
+    <link rel="stylesheet" href="css/foundation.css" th:href="@{/css/foundation.css}">
+    <link rel="stylesheet" href="css/app.css" th:href="@{/css/app.css}">
+    <link rel="stylesheet" href="css/viewer.css" th:href="@{/css/viewer.css}">
+  </head>
+  <body>
+    <div class = "grid-x grid-padding-x" style="height:100%;">
+      <div class = "medium-4"></div>
+      <div class = "medium-4 grid-y grid-padding-y" style="height:100%;">
+          <div class = "medium-1"></div>
+          <div class = "medium-4">
+              <img class = "login-logo" th:src="@{/pics/logo.png}" alt="logo">
+          </div>
+      </div>
+      <div class = "medium-4"></div>
+    </div>
+
+          <table class="table-expand">
+              <thead>
+              <tr class="table-expand-row">
+                  <th width="300">Appointment Time</th>
+                  <th>Customer</th>
+                  <th >Dog</th>
+                  <th width="300">Address</th>
+                  <th width="200">Groom Option</th>
+                  <th width="300">Comments</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="appointment : ${appointmentList}" th:if="${appointment.time.after(#dates.createNow())}">
+                  <td scope="row" th:text="${#dates.format(appointment.time,'yyyy-MM-dd HH:mm')}"></td>
+                  <td>
+                      <p th:text="${user.name}" th:each="user:${userList}" th:if="${appointment.userID}==${user.id}"></p>
+                  </td>
+                  <td>
+                      <p th:text="${appointment.dogName}"></p>
+                  </td>
+                  <td>
+                      <p th:text="${user.homeAddr}" th:each="user:${userList}" th:if="${appointment.userID}==${user.id}"></p>
+                  </td>
+                  <td>
+                      <p th:text="${appointment.optionName}"></p>
+                  </td>
+                  <td>
+                      <p th:text="${appointment.comment}"></p>
+                  </td>
+              </tr>
+              </tbody>
+          </table>
+
+    <!--<a th:href="@{/email}" style="color: #1468a0">Activate Email Service</a>-->
+
+              
+
+    <!--<script src="js/vendor/jquery.js"></script>-->
+    <!--<script src="js/vendor/what-input.js"></script>-->
+    <!--<script src="js/vendor/foundation.js"></script>-->
+    <!--<script src="js/app.js"></script>-->
+    <script src="js/viewer.js" th:src="@{/js/viewer.js}"></script>
+
+  </body>
+</html>

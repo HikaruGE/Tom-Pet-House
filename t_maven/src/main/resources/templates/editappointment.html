@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" style="height: 100%;" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    <link rel="stylesheet" href="css/foundation.css" th:href="@{/css/foundation.css}">
+    <link rel="stylesheet" href="css/app.css" th:href="@{/css/app.css}">
+  </head>
+
+  <body style="height:100%;">
+    <div class = "grid-x grid-padding-x" style="height:100%;">
+       <div class = "medium-4"></div>
+       <div class = "medium-4 grid-y grid-padding-y" style="height:100%;">
+         <div class = "medium-4">
+           <img class = "login-logo" src="pics/logo.png" th:src="@{/pics/logo.png}" alt="logo">
+         </div>
+         <h4 class="text-center">Make an Appointment</h4>
+         <div class = "medium-6" style="width:100%;">
+           <form  action="#" th:action="@{/user/edit_appointment_finish/}+${user}+'/'+${appointment.id}" method='POST'>
+             <label>Time</label>
+             <select name="time">
+               <option th:value="${#dates.format(appointment.time, 'yyyy-MM-dd HH:mm')}"
+                       th:text="${#dates.format(appointment.time, 'yyyy-MM-dd HH:mm')}"></option>
+               <option th:each="time : ${times}"
+                       th:value="${#dates.format(time, 'yyyy-MM-dd HH:mm')}"
+                       th:text="${#dates.format(time, 'yyyy-MM-dd HH:mm')}"
+                       th:unless="${#dates.format(time, 'yyyy-MM-dd HH:mm')}==${#dates.format(appointment.time, 'yyyy-MM-dd HH:mm')}"></option>
+             </select>
+
+             <label>Dog Name</label>
+             <select name="dogID">
+               <option th:each="dog : ${dogs}"
+                       th:value="${dog.dogId}"
+                       th:text="${dog.name}"
+                       th:if="${dog.dogId}==${appointment.dog}"></option>
+               <option th:each="dog : ${dogs}"
+                       th:value="${dog.dogId}"
+                       th:text="${dog.name}"
+                       th:unless="${dog.dogId}==${appointment.dog}"></option>
+             </select>
+
+             <label>Groom Selection</label>
+             <select name="optionID">
+               <option th:each="option:${options}"
+                       th:value="${option.id}"
+                       th:text="${option.name}"
+                       th:if="${option.id}==${appointment.option}"></option>
+               <option th:each="option:${options}"
+                       th:value="${option.id}"
+                       th:text="${option.name}"
+                       th:unless="${option.id}==${appointment.option}"></option>
+             </select>
+
+             <label>Comment</label>
+             <textarea name="comment" class="comment-box" th:text="${appointment.comment}"
+                       placeholder="Please type your special instructions to the Groomer if necessary"
+                       ></textarea>
+             <div class="grid-x grid-padding-x appointment-btn">
+               <div class="small-6"><input type="submit" value="Edit" /></div>
+               <div class="small-6"><input type="reset" value="Reset" /></div>
+             </div>
+           </form>
+         </div>
+         <div class = "medium-2"></div>
+       </div>
+       <div class = "medium-4"></div>
+    </div>
+
+
+    <script src="js/vendor/jquery.js" th:src="@{/js/vendor/jquery.js}"></script>
+    <script src="js/vendor/what-input.js" th:src="@{/js/vendor/what-input.js}"></script>
+    <script src="js/vendor/foundation.js" th:src="@{/js/vendor/foundation.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en"  style="height: 100%;" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="css/foundation.css" th:href="@{/css/foundation.css}">
+    <link rel="stylesheet" href="css/app.css" th:href="@{/css/app.css}">
+    <link rel="stylesheet" href="css/profile.css" th:href="@{/css/profile.css}">
+    <link rel="stylesheet" href="css/fontawesome.css" th:href="@{/css/fontawesome.css}">
+</head>
+
+<body style="height:100%;">
+<div class="grid-y grid-padding-y" style="height:100%;">
+    <div class = "cell medium-3">
+        <div class="grid-x">
+            <div class="cell medium-4"></div>
+            <div class="cell medium-4">
+                <img class = "login-logo" src="pics/logo.png" th:src="@{/pics/logo.png}" alt="logo">
+            </div>
+        </div>
+    </div>
+    <div class = "cell medium-1"></div>
+    <div class = "cell medium-6">
+        <div class="grid-x">
+            <div class="cell medium-1"></div>
+            <div class="cell medium-5">
+                <div class="card-profile-stats">
+                    <div class="card-profile-stats-intro">
+                        <div class="card-profile-stats-intro-content">
+                            <div class="grid-x">
+                                <div class="cell small-1">
+                                    <button type="button" id="editbu" onclick="editAccount()">edit</button>
+                                </div>
+                            </div>
+                            <form  action="#" th:action="@{/user/edit_profile/}+${user.id}" method='POST'>
+                                <p>
+                                    <b>Name:</b>
+                                    <p th:text="${user.name}" id="infoname"></p>
+                                    <span><input type="text" id="inputname" th:field="${user.name}"></span>
+                                </p>
+
+                                <p>
+                                    <b>Home Address:</b>
+                                    <p th:text="${user.homeAddr}" id="infohm"></p>
+                                    <span><input type="text" id="inputhm" th:field="${user.homeAddr}"></span>
+                                </p>
+
+                                <p>
+                                    <b>Mobile Number:</b>
+                                    <p th:text="${user.mobile}" id="infomo"></p>
+                                    <span><input type="text" id="inputmo" th:field="${user.mobile}"></span>
+                                </p>
+
+                                <p>
+                                    <b>Home Number:</b>
+                                    <p th:text="${user.homeNum}" id="infohn"></p>
+                                    <span ><input type="text" id="inputhn" th:field="${user.homeNum}" ></span>
+                                </p>
+                                <p>
+                                    <b>Phone Number:</b>
+                                    <p th:text="${user.workNum}" id="infopn"></p>
+                                    <span><input type="text" id="inputpn" th:field="${user.workNum}"></span>
+                                </p>
+                            <input type="submit" value="Submit" id="submitbutton" />
+                            </form>
+                        </div> <!-- /.card-profile-stats-intro-content -->
+                    </div> <!-- /.card-profile-stats-intro -->
+                </div>
+                <h4 style="display: inline-block;margin: 10px;"> Dog List</h4>
+                <a th:href="@{/user/adddog/}+${user.id}" style="color: teal;margin-top: 10px;">Add new dog</a>
+                <table class="dashboard-table" id="dogtable">
+                    <thead>
+                    <tr>
+                        <th>Dog Name</th>
+                        <th>Breed </th>
+                        <th>DoB </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- <tr th:each="dog : ${dogList}" id="dogtable">
+                        <th scope="row" th:text="${dog.name}"></th>
+                        <td><p th:text="${dog.breed}"></p></td>
+                        <td><p th:text="${#dates.format(dog.doB,'yyyy-MM-dd')}"></p></td>
+                        <td>
+                            <div class="dashboard-table-button">
+                                <a th:href="@{/user/dogEdit/}+${user.id}+'/'+${dog.dogId}">edit</a>
+                                &nbsp;
+                                <a th:href="@{/user/dogDelete/}+${user.id}+'/'+${dog.dogId}"
+                                   onclick="return confirm('Delete?');">delete</a>
+                            </div>
+                      </td>
+                    </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="cell medium-1"></div>
+            <div class="cell medium-5">
+                <div class="grid-y">
+                    <div class="cell medium-1">
+                        <h4 style="display: inline-block;margin: 10px;"> Appointment List</h4>
+                            <a th:href="@{/user/add_appointment/}+${user.id}" id="addAppo" >add new appointment</a>
+                    </div>
+                    <table class="dashboard-table" id="appointmenttable">
+                        <thead>
+                        <tr>
+                            <th>Appointment Time</th>
+                            <th>Dog </th>
+                            <th>Groom Option </a></th>
+                            <th>Comments</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointment : ${appointmentList}">
+                            <th scope="row" th:text="${#dates.format(appointment.time, 'yyyy-MM-dd HH:mm')}" ></th>
+                            <td><p th:text="${appointment.dogName}"></p></td>
+                            <td><p th:text="${appointment.optionName}"></p></td>
+                            <td><p th:text="${appointment.comment}"></p></td>
+                            <td>
+                                <div class="dashboard-table-button">
+                                    <div th:if="${appointment.time.after(#dates.createNow())}">
+                                        <a th:href="@{/user/edit_appointment/}+${user.id}+'/'+${appointment.appointmentID}">edit</a>
+                                        &nbsp;
+                                        <a th:href="@{/user/delete_appointment/}+${user.id}+'/'+${appointment.appointmentID}"
+                                           onclick="return confirm('Delete?');">delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class = "cell medium-2"></div>
+</div>
+
+
+
+<script src="js/vendor/jquery.js" th:src="@{/js/vendor/jquery.js}"></script>
+<script src="js/vendor/what-input.js" th:src="@{/js/vendor/what-input.js}"></script>
+<script src="js/vendor/foundation.js" th:src="@{/js/vendor/foundation.min.js}"></script>
+<script src="js/app.js" th:src="@{/js/app.js}"></script>
+<script src="js/profile.js" th:src="@{/js/profile.js}"></script>
+</body>
+</html>
